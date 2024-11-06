@@ -4,6 +4,7 @@ namespace DeepCopyTest;
 
 use ArrayObject;
 use DateInterval;
+use DatePeriod;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeZone;
@@ -158,6 +159,7 @@ class DeepCopyTest extends TestCase
         $object->d2 = new DateTimeImmutable();
         $object->dtz = new DateTimeZone('UTC');
         $object->di = new DateInterval('P2D');
+        $object->dp = new DatePeriod(new DateTime(), new DateInterval('P2D'), 3);
 
         $copy = deep_copy($object);
 
@@ -165,6 +167,7 @@ class DeepCopyTest extends TestCase
         $this->assertEqualButNotSame($object->d2, $copy->d2);
         $this->assertEqualButNotSame($object->dtz, $copy->dtz);
         $this->assertEqualButNotSame($object->di, $copy->di);
+        $this->assertEqualButNotSame($object->dp, $copy->dp);
     }
 
     /**
