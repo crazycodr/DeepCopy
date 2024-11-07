@@ -31,6 +31,12 @@ class DatePeriodFilter implements TypeFilter
             return new DatePeriod($element->getStartDate(), $element->getDateInterval(), $element->getEndDate(), $options);
         }
 
-        return new DatePeriod($element->getStartDate(), $element->getDateInterval(), $element->getRecurrences(), $options);
+        if (PHP_VERSION_ID >= 70217) {
+            $recurrences = $element->getRecurrences();
+        } else {
+            $recurrences = $element->recurrences - $element->include_start_date;
+        }
+
+        return new DatePeriod($element->getStartDate(), $element->getDateInterval(), $recurrences, $options);
     }
 }
